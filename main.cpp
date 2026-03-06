@@ -5,15 +5,18 @@
 
 double hidden_layer[2];
 
-double *neural_network ( int inputs[], double *weights ) {
+double *neural_network ( int* inputs, double* weights ) {
 
-	double *layer = (double*) calloc( len(weights), sizeof(double) );
+	size_t layer_length = len(weights);
+	size_t inputs_length = len(inputs);
+
+	double *layer = (double*) calloc( layer_length, sizeof(double) );
 	
 	double bias = 1.0;
 
-	for ( int i = 0; i < 2; i++ )
+	for ( int i = 0; i <= inputs_length; i++ )
 	{
-		for ( int j = 0; j < 2; j++ )
+		for ( int j = 0; j <= layer_length; j++ )
 		{
 			layer[i] += inputs[i] * weights[j]; 
 		}
