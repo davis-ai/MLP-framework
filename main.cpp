@@ -4,24 +4,27 @@
 #define len(x) (sizeof(x) / sizeof(x[0]))
 
 double hidden_layer[2];
+void print( double*);
 
-double *neural_network ( int* inputs, double* weights ) {
+
+double *neural_network ( double* inputs, double* weights ) {
 
 	size_t layer_length = len(weights);
 	size_t inputs_length = len(inputs);
+	int i = 0, j = 0;
 
 	double *layer = (double*) calloc( layer_length, sizeof(double) );
 	
 	double bias = 1.0;
 
-	for ( int i = 0; i <= inputs_length; i++ )
+	while ( i < layer_length   )
 	{
-		for ( int j = 0; j <= layer_length; j++ )
+		while ( j < inputs_length ) 
 		{
-			layer[i] += inputs[i] * weights[j]; 
+			layer[i] += inputs[i] * weights[j++]; 
 		}
 
-		layer[i] += bias;
+		layer[i++] += bias;
 	}
 
 	return layer;
@@ -29,17 +32,37 @@ double *neural_network ( int* inputs, double* weights ) {
 
 int main() {
 	
-	int x[] = { 1, 2 };
+	double x[] = { 1.0, 2.0 };
 	double weights[] = { 1.0, 1.0 };
-	
+	double output_weights[] = { 1.0 };	
 	
 	double* hidden = neural_network( x, weights );
-	
-	for ( int i = 0; i < 2; i++ )
-		printf("%lf ", hidden[i]);
+	print( hidden );
 
-	printf("\n");
-	
+	double* output = neural_network( hidden, output_weights ); 	
+	print( output );
+
+
+
+
+	free(hidden);
+	free(output);	
+
 	return 0;
+}
+
+
+
+
+
+
+void print( double* layer ) {
+
+	for ( int i = 0; i < len(layer); i++ )
+		printf("%lf ", layer[i]);
+
+	printf("\n\n");
+
+
 
 }
