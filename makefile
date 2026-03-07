@@ -8,3 +8,6 @@ SOURCE = main.cpp
 
 $(TARGET): $(SOURCE)
 	$(CC) -o $@ $<
+
+clean:
+	rm $(TARGET)

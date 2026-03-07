@@ -11,14 +11,17 @@ double *neural_network ( double* inputs, double* weights ) {
 
 	size_t layer_length = len(weights);
 	size_t inputs_length = len(inputs);
-	int i = 0, j = 0;
+	 
 
 	double *layer = (double*) calloc( layer_length, sizeof(double) );
 	
 	double bias = 1.0;
+	int i = 0;
 
 	while ( i < layer_length   )
 	{
+		int j = 0;
+
 		while ( j < inputs_length ) 
 		{
 			layer[i] += inputs[i] * weights[j++]; 
