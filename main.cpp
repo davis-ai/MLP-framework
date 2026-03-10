@@ -76,7 +76,7 @@ double** dot_product ( double** A, double** B, size_t size[] ){
 	{
 		for ( int j = 0; j < col2; j++ )
 		{
-			C[i][j] = 0;
+			// C[i][j] = 0;
 
 			for ( int k = 0; k < col; k++ )
 				C[i][j] += A[i][k] * B[k][j];			
