@@ -5,7 +5,8 @@
 
 double hidden_layer[2];
 
-double *neural_network ( double* ,size_t, double*, size_t ); 
+double *neural_network ( double* ,size_t, double**, size_t ); 
+double** dot_product ( double**, double**, size_t );
 void print( double*, size_t );
 
 
@@ -13,12 +14,12 @@ void print( double*, size_t );
 int main() {
 	
 	double x[] = { 1.0, 2.0 };
-	double weights[][] = { { 1.0, 1.0 }, { 1.0, 1.0} } ;
-	double output_weights[][] = { {1.0}, {1.0} };	
+	double weights[][2] = { { 1.0, 1.0 }, { 1.0, 1.0} } ;
+	double output_weights[][2] = { {1.0, 1.0} };	
 
 	size_t inp_len = len(x);
-	size_t w_len = len(weights);
-	size_t ow_len = len(output_weights);
+	size_t w_len = len(weights[0]);
+	size_t ow_len = len(output_weights[0]);
 	
 	double* hidden = neural_network( x, inp_len, weights, w_len );
 	print( hidden, w_len );
@@ -40,7 +41,7 @@ int main() {
 
 
 
-double *neural_network ( double* inputs,size_t inputs_length, double* weights, size_t weights_length ) {
+double *neural_network ( double* inputs,size_t inputs_length, double** weights, size_t weights_length ) {
 
 	double *layer = (double*) calloc( weights_length, sizeof(double) );
 	
@@ -53,7 +54,7 @@ double *neural_network ( double* inputs,size_t inputs_length, double* weights, s
 
 		while ( j < inputs_length ) 
 		{
-			layer[i] += inputs[j++] * weights[i]; 
+			layer[i] += inputs[i] * weights[i][j]; 
 			
 		}
 
@@ -65,6 +66,26 @@ double *neural_network ( double* inputs,size_t inputs_length, double* weights, s
 }
 
 
+double** dot_product ( double** A, double** B, size_t size[] ){
+
+	size_t row = size[0], col = size[1], col2 = size[3];
+	double (*C)[col2] = calloc( row, sizeof *double );
+
+
+	for ( int i = 0; i < row; i++ )
+	{
+		for ( int j = 0; j < col2; j++ )
+		{
+			C[i][j] = 0;
+
+			for ( int k = 0; k < col; k++ )
+				C[i][j] += A[i][k] * B[k][j];			
+		}
+	}
+	
+	return C;
+
+}
 
 void print( double* layer, size_t weights_length ) {
 
