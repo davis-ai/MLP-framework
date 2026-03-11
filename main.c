@@ -35,7 +35,7 @@ int main() {
 
 	
 	double** hidden = neural_network( rA, cA, cB, x, weights, bias );
-	print( rA, cB, hidden, "Hidde" );
+	print( rA, cB, hidden, "Hidden" );
 
 	rA = 1, cA = 2, cB = 1, bias = 0.5;
 	double** output = neural_network( rA, cA, cB, hidden, output_weights, bias );
@@ -88,7 +88,7 @@ double** dot_product ( int row_A, int col_A, int col_B, double A[row_A][col_A], 
 
 void print( int row_A, int col_B, double** layer, char* layer_type ) {
 
-	printf("%s layer \n", layer_type);
+	printf("%s Layer: \n", layer_type);
 
 	for ( int i = 0; i < row_A; i++ ) 
 	{
