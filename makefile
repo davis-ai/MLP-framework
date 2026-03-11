@@ -2,14 +2,15 @@
 # 	recipe
 
 
-CC = g++
+CC = gcc
 TARGET = main
-SOURCE = main.cpp
+SOURCE = main.c
+
 
 $(TARGET): $(SOURCE)
 	$(CC) -o $@ $<
 
-test: test.cpp
+test: test.c
 	$(CC) -o $@ $<
 
 
