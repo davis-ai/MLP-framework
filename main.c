@@ -8,7 +8,7 @@ double hidden_layer[2];
 double** neural_network ( int, int, int, double[*][*], double[*][*], double ); 
 double** dot_product ( int, int, int, double[*][*], double[*][*] );
 
-void print( int row_A, int col_B, double** );
+void print( int row_A, int col_B, double**, char* );
 void free_mem ( int, double** );
 
 
@@ -35,11 +35,11 @@ int main() {
 
 	
 	double** hidden = neural_network( rA, cA, cB, x, weights, bias );
-	print( rA, cB, hidden );
+	print( rA, cB, hidden, "Hidde" );
 
 	rA = 1, cA = 2, cB = 1, bias = 0.5;
 	double** output = neural_network( rA, cA, cB, hidden, output_weights, bias );
-	print( rA, cB, output);
+	print( rA, cB, output, "Output");
 
 
 
@@ -86,7 +86,9 @@ double** dot_product ( int row_A, int col_A, int col_B, double A[row_A][col_A], 
 
 }
 
-void print( int row_A, int col_B, double** layer ) {
+void print( int row_A, int col_B, double** layer, char* layer_type ) {
+
+	printf("%s layer \n", layer_type);
 
 	for ( int i = 0; i < row_A; i++ ) 
 	{
