@@ -5,32 +5,41 @@
 
 double hidden_layer[2];
 
-double *neural_network ( double* ,size_t, double**, size_t ); 
-double** dot_product ( int row_A, int col_A, int col_B, double A[row_A][col_A], double B[col_A][col_B] );
+double** neural_network ( int, int, int, double[*][*], double[*][*], double ); 
+double** dot_product ( int, int, int, double[*][*], double[*][*] );
 
 void print( int row_A, int col_B, double** );
 void free_mem ( int, double** );
 
 
 int main() {
+	/*
 	
+		inputs = [ x1, x2 ]
+
+			
+		weights = [       h1    h2
+			      [ w1.x1, w1.x1],
+			      [ w2.x2, w2.x2]
+			  ]
+	
+	*/	
+
 	double x[][2] = { {1.0, 2.0} };
 	double weights[][2] = { { 1.0, 1.0 }, { 1.0, 1.0} } ;
 
-	double output_weights[][2] = { {1.0, 1.0} };	
+	double output_weights[][1] = { {1.0}, {1.0} };	
 
 	int rA = 1, cA = 2, cB = 2;
+	double bias = 1.0;
 
-//	size_t inp_len = len(x);
-//	size_t w_len = len(weights[0]);
-//	size_t ow_len = len(output_weights[0]);
 	
-	//double* hidden = neural_network( x, inp_len, weights, w_len );
-	double** hidden = dot_product( rA, cA, cB, x, weights );
+	double** hidden = neural_network( rA, cA, cB, x, weights, bias );
 	print( rA, cB, hidden );
 
-	// double* output = neural_network( hidden, w_len, output_weights, ow_len ); 	
-	// print( output, rA, cB );
+	rA = 1, cA = 2, cB = 1, bias = 0.5;
+	double** output = neural_network( rA, cA, cB, hidden, output_weights, bias );
+	print( rA, cB, output);
 
 
 
@@ -46,21 +55,14 @@ int main() {
 
 
 
-double *neural_network ( double* inputs,size_t inputs_length, double** weights, size_t weights_length ) {
+double** neural_network ( int row_A, int col_A, int col_B, double A[row_A][col_A], double B[col_A][col_B], double bias ) {
 
-	double *layer = (double*) calloc( weights_length, sizeof(double) );
-	
-	double bias = 1.0;
-	int i = 0; while ( i < weights_length ) { int j = 0; while ( j < inputs_length ) {
-			layer[i] += inputs[i] * weights[i][j]; 
-			
-		}
+	double** layer = dot_product( row_A, col_A, col_B, A, B);
 
-		layer[i++] += bias;
-		
-	}
-
-	return layer;
+	for ( int i = 0; i < row_A; i++ )
+		for ( int j = 0; j < col_B; j++ )
+			layer[i][j] += bias;
+	return layer; 
 }
 
 
@@ -93,7 +95,7 @@ void print( int row_A, int col_B, double** layer ) {
 		printf("\n");
 	}
 
-	printf("\n\n");
+	printf("\n");
 
 
 
