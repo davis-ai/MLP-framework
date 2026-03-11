@@ -7,8 +7,9 @@ double hidden_layer[2];
 
 double *neural_network ( double* ,size_t, double**, size_t ); 
 double** dot_product ( int row_A, int col_A, int col_B, double A[row_A][col_A], double B[col_A][col_B] );
-void print( int row_A, int col_B, double** );
 
+void print( int row_A, int col_B, double** );
+void free_mem ( int, double** );
 
 
 int main() {
@@ -34,9 +35,8 @@ int main() {
 
 
 
-	for ( int i = 0; i < rA; i++ ) free(hidden[i]);
-	free(hidden);
-	// free(output);	
+	free_mem( rA, hidden );
+
 
 	return 0;
 }
@@ -96,5 +96,12 @@ void print( int row_A, int col_B, double** layer ) {
 	printf("\n\n");
 
 
+
+}
+
+void free_mem( int row_A, double** layer) {
+
+	for ( int i = 0; i < row_A; i++ )
+	free( layer[i] ); free(layer);
 
 }
