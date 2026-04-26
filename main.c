@@ -6,7 +6,7 @@
 double hidden_layer[2];
 
 double** neural_network ( int, int, int, double[*][*], double[*][*], double ); 
-double** dot_product ( int, int, int, double[*][*], double[*][*] );
+double dot_product ( const double[], double[], int );
 
 void print( int row_A, int col_B, double**, char* );
 void free_mem ( int, double** );
@@ -66,21 +66,12 @@ double** neural_network ( int row_A, int col_A, int col_B, double A[row_A][col_A
 }
 
 
-double** dot_product ( int row_A, int col_A, int col_B, double A[row_A][col_A], double B[col_A][col_B] ){
+double dot_product ( const double Inp[], double Wgt[], int size ){
 
-	double** C = (double**) malloc( row_A * sizeof(double*) );
-	for ( int i = 0; i < row_A; i++ ) C[i] = (double*) calloc( col_B, sizeof(double) );
+	double C = 0;
 
-	for ( int i = 0; i < row_A; i++ )
-	{
-		for ( int j = 0; j < col_B; j++ )
-		{
-			// C[i][j] = 0;
-
-			for ( int k = 0; k < col_A; k++ )
-				C[i][j] += A[i][k] * B[k][j];			
-		}
-	}
+	for ( int i = 0; i < size; i++ )
+       	    C += Inp[i] * Wgt[i];			
 	
 	return C;
 
