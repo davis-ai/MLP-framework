@@ -26,20 +26,18 @@ int main() {
 	
 	*/	
 
-	double x[][2] = { {1.0, 2.0} };
-	double weights[][2] = { { 1.0, 1.0 }, { 1.0, 1.0} } ;
+	double x[] =  { 1.0, 2.0 };	
 
-	double output_weights[][1] = { {1.0}, {1.0} };	
+	int inp_size = 2;
+	int layer_count= 3;
 
-	int rA = 1, cA = 2, cB = 2;
-	double bias = 1.0;
+	double ih_wgts[][3] = { { .1, .2 }, { .3, .4 }, { .5, .2 } }; int layer_size = 3;
+//	double ho_wgts[][2] = { { .3, .4 }, { .5, .2 } }; int layer_size = 2;
+
+//	double ( *Weights[ layer_count ] )[ inp_size] = { ih_wgts, ho_wgts };
+
 
 	
-	double** hidden = neural_network( rA, cA, cB, x, weights, bias );
-	print( rA, cB, hidden, "Hidden" );
-
-	rA = 1, cA = 2, cB = 1, bias = 0.5;
-	double** output = neural_network( rA, cA, cB, hidden, output_weights, bias );
 	print( rA, cB, output, "Output");
 
 
