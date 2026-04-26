@@ -5,8 +5,9 @@
 
 double hidden_layer[2];
 
-double** neural_network ( int, int, int, double[*][*], double[*][*], double ); 
 double dot_product ( const double[], double[], int );
+double* vec_matrix_mult ( int, int, const double input[*], double weight[*][*] );
+double* neural_network ( int, int, int, double[*][*], double[*][*], double ); 
 
 void print( int row_A, int col_B, double**, char* );
 void free_mem ( int, double** );
@@ -74,6 +75,17 @@ double dot_product ( const double Inp[], double Wgt[], int size ){
        	    C += Inp[i] * Wgt[i];			
 	
 	return C;
+
+}
+
+double* vec_matrix_mult ( int size_inp, int r_wgt, const double input[size_inp], double weight[r_wgt][size_inp] ) 
+{
+	double* result = calloc( r_wgt, sizeof(double) );
+	
+	for ( int i = 0; i < r_wgt; i++ )
+	    result[i] = dot_product( Input, Weight[i] )
+
+	return result; 
 
 }
 
