@@ -6,8 +6,8 @@
 double hidden_layer[2];
 
 double dot_product ( const double[], double[], int );
-double* vec_matrix_mult ( int, int, const double input[*], double weight[*][*] );
-double* neural_network ( int, int, int, double[*][*], double[*][*], double ); 
+double* vec_matrix_mult ( int, int, const double[*], double[*][*] );
+double* neural_network (  int, int, double[], double[*][*] ); 
 
 void print( int row_A, int col_B, double**, char* );
 void free_mem ( int, double** );
@@ -56,14 +56,11 @@ int main() {
 
 
 
-double** neural_network ( int row_A, int col_A, int col_B, double A[row_A][col_A], double B[col_A][col_B], double bias ) {
+double* neural_network ( int size_input, int row_weight, double Input[], double B[row_weight][size_input] )
+{
+	double* hidden = vec_mat_mul ( size_input, row_weight, Input, Weight );
 
-	double** layer = dot_product( row_A, col_A, col_B, A, B);
-
-	for ( int i = 0; i < row_A; i++ )
-		for ( int j = 0; j < col_B; j++ )
-			layer[i][j] += bias;
-	return layer; 
+	return hidden; 
 }
 
 
@@ -83,7 +80,7 @@ double* vec_matrix_mult ( int size_inp, int r_wgt, const double input[size_inp],
 	double* result = calloc( r_wgt, sizeof(double) );
 	
 	for ( int i = 0; i < r_wgt; i++ )
-	    result[i] = dot_product( Input, Weight[i] )
+	    result[i] = dot_product( size_inp, input, weight[i] )
 
 	return result; 
 
