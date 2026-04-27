@@ -65,7 +65,7 @@ double* neural_network ( int size_input, int row_weight, double Input[], double 
 }
 
 
-double dot_product ( const double Inp[], double Wgt[], int size ){
+double dot_product ( int size, const double Inp[], double Wgt[] ){
 
 	double C = 0;
 
