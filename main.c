@@ -5,7 +5,7 @@
 
 double hidden_layer[2];
 
-double dot_product ( const double[], double[], int );
+double dot_product ( int, const double[], double[] );
 double* vec_matrix_mult ( int, int, const double[*], double[*][*] );
 double* neural_network (  int, int, double[], double[*][*] ); 
 
