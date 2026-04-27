@@ -36,14 +36,17 @@ int main() {
 
 //	double ( *Weights[ layer_count ] )[ inp_size] = { ih_wgts, ho_wgts };
 
-
+	double* pred = neural_network ( inp_size, layer_size, x, ih_wgts );
+	for (int i = 0; i < layer_size; i++ )
+	printf("%lf ", pred[i]);
 	
-	print( rA, cB, output, "Output");
+//	print( rA, cB, output, "Output");
 
 
 
 
-	free_mem( rA, hidden );
+//	free_mem( rA, hidden );
+	free( pred );
 
 
 	return 0;
@@ -78,7 +81,7 @@ double* vec_matrix_mult ( int size_inp, int r_wgt, const double input[size_inp],
 	double* result = calloc( r_wgt, sizeof(double) );
 	
 	for ( int i = 0; i < r_wgt; i++ )
-	    result[i] = dot_product( size_inp, input, weight[i] )
+	    result[i] = dot_product( size_inp, input, weight[i] );
 
 	return result; 
 
