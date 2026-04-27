@@ -9,7 +9,7 @@ double dot_product ( int, const double[], double[] );
 double* vec_matrix_mult ( int, int, const double[*], double[*][*] );
 double* neural_network (  int, int, double[], double[*][*] ); 
 
-void print( int row_A, int col_B, double**, char* );
+void print( int, double*, char* );
 void free_mem ( int, double** );
 
 
@@ -37,10 +37,9 @@ int main() {
 //	double ( *Weights[ layer_count ] )[ inp_size] = { ih_wgts, ho_wgts };
 
 	double* pred = neural_network ( inp_size, layer_size, x, ih_wgts );
-	for (int i = 0; i < layer_size; i++ )
-	printf("%lf ", pred[i]);
+
 	
-//	print( rA, cB, output, "Output");
+	print( layer_size, pred, "Hidden");
 
 
 
@@ -87,16 +86,13 @@ double* vec_matrix_mult ( int size_inp, int r_wgt, const double input[size_inp],
 
 }
 
-void print( int row_A, int col_B, double** layer, char* layer_type ) {
+void print( int layer_size, double* layer, char* layer_type ) {
 
 	printf("%s Layer: \n", layer_type);
 
-	for ( int i = 0; i < row_A; i++ ) 
-	{
-		for ( int j = 0; j < col_B; j++ )
-			printf("%lf ", layer[i][j]);
-		printf("\n");
-	}
+	for ( int i = 0; i < layer_size ; i++ ) 
+	    printf( "%lf ", layer[i] );
+
 
 	printf("\n");
 
