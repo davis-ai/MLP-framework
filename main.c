@@ -57,7 +57,7 @@ int main() {
 
 
 
-double* neural_network ( int size_input, int row_weight, double Input[], double B[row_weight][size_input] )
+double* neural_network ( int size_input, int row_weight, double Input[], double Weight[row_weight][size_input] )
 {
 	double* hidden = vec_matrix_mult ( size_input, row_weight, Input, Weight );
 
