@@ -3,7 +3,7 @@
 
 #define len(x) (sizeof(x) / sizeof(x[0]))
 
-
+double* elem_mult ( const double[], double[], int );
 double dot ( const double[], double[], int );
 double* vec_mat_mult ( int, int, const double[*], double[*][*] );
 double* neural_network (  int, int, double[], double[*][*] ); 
@@ -30,15 +30,32 @@ int main() {
 
 //	double ( *Weights[ layer_count ] )[ inp_size] = { ih_wgts, ho_wgts };
 
+
 	double* pred = neural_network ( inp_size, layer_size, x, ih_wgts );
-	double* dlt = delta( pred, output );
+	double alpha = 0.001;
+
+	for ( int i = 0; i < 1000; i++ )
+	{
+		
+
+		double* dlt = delta( pred, output );
+		double* error = elem_mult(dlt, dlt, output_size);
+		
+		for ( int l = 0; l < layer_size; l++ )
+			for ( int j = 0; j < inp_size; j++ )
+				ih_wgts[l][j] -= elem_mult(dlt, x, output_size)[l] * alpha;
+
+		pred = neural_network ( inp_size, layer_size, x, ih_wgts );
+		print( layer_size, pred, "\nOutput");
+		print( output_size, error, "Error");	
+
+	}
 
 
 
 
 	
-	print( layer_size, pred, "Hidden");
-	print( output_size, dlt, "\nDelta");	
+	
 
 
 
@@ -102,9 +119,16 @@ double* delta ( double prediction[], double output[] ) {
 
 }
 
+double* elem_mult ( const double A[], double B[], int prod_size ) {
+
+	double* prod = (double*)malloc(sizeof(double) * prod_size);
+	for ( int i = 0; i < prod_size; i++ ) prod[i] = A[i] * B[i];
+	return prod;
+}
+
 void print( int layer_size, double* layer, char* layer_type ) {
 
-	printf("%s Layer: \n", layer_type);
+	printf("%s : \n", layer_type);
 
 	for ( int i = 0; i < layer_size ; i++ ) 
 	    printf( "%lf ", layer[i] );
