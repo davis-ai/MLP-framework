@@ -3,44 +3,42 @@
 
 #define len(x) (sizeof(x) / sizeof(x[0]))
 
-double hidden_layer[2];
 
-double dot_product ( int, const double[], double[] );
-double* vec_matrix_mult ( int, int, const double[*], double[*][*] );
+double dot ( const double[], double[], int );
+double* vec_mat_mult ( int, int, const double[*], double[*][*] );
 double* neural_network (  int, int, double[], double[*][*] ); 
 
 void print( int, double*, char* );
-void free_mem ( int, double** );
+void free_mem ( int, double* );
 
+void backProp ( int, int, double[], double[][*] );
+double* delta ( double[], double[] );
+
+
+int output_size = 3;
 
 int main() {
-	/*
-	
-		inputs = [ x1, x2 ]
-
-			
-		weights = [       h1    h2
-			      [ w1.x1, w1.x1],
-			      [ w2.x2, w2.x2]
-			  ]
-	
-	*/	
 
 	double x[] =  { 1.0, 2.0 };	
+	double output[] = { 3.0, 1.0, 0 };
 
 	int inp_size = 2;
 	int layer_count= 3;
 
-	double ih_wgts[][3] = { { .1, .2 }, { .3, .4 }, { .5, .2 } }; int layer_size = 3;
+	double ih_wgts[][2] = { { .1, .2 }, { .3, .4 }, { .5, .2 } }; int layer_size = 3;
 //	double ho_wgts[][2] = { { .3, .4 }, { .5, .2 } }; int layer_size = 2;
 
 //	double ( *Weights[ layer_count ] )[ inp_size] = { ih_wgts, ho_wgts };
 
 	double* pred = neural_network ( inp_size, layer_size, x, ih_wgts );
+	double* dlt = delta( pred, output );
+
+
+
 
 	
 	print( layer_size, pred, "Hidden");
-
+	print( output_size, dlt, "\nDelta");	
 
 
 
@@ -58,13 +56,13 @@ int main() {
 
 double* neural_network ( int size_input, int row_weight, double Input[], double Weight[row_weight][size_input] )
 {
-	double* hidden = vec_matrix_mult ( size_input, row_weight, Input, Weight );
+	double* hidden = vec_mat_mult ( size_input, row_weight, Input, Weight );
 
 	return hidden; 
 }
 
 
-double dot_product ( int size, const double Inp[], double Wgt[] ){
+double dot ( const double Inp[], double Wgt[], int size) {
 
 	double C = 0;
 
@@ -75,14 +73,32 @@ double dot_product ( int size, const double Inp[], double Wgt[] ){
 
 }
 
-double* vec_matrix_mult ( int size_inp, int r_wgt, const double input[size_inp], double weight[r_wgt][size_inp] ) 
+double* vec_mat_mult ( int size_inp, int r_wgt, const double input[size_inp], double weight[r_wgt][size_inp] ) 
 {
 	double* result = calloc( r_wgt, sizeof(double) );
 	
 	for ( int i = 0; i < r_wgt; i++ )
-	    result[i] = dot_product( size_inp, input, weight[i] );
+	    result[i] = dot( input, weight[i], size_inp );
 
 	return result; 
+
+}
+
+void backProp ( int a, int b, double A[], double B[][3] ) {
+
+	
+
+}
+
+double* delta ( double prediction[], double output[] ) {
+
+	double *pure_error = (double*) malloc(sizeof(double) * output_size );
+	
+	for ( int i = 0; i < output_size; i++ )
+		pure_error[i] = prediction[i] - output[i];
+	
+	return pure_error;
+
 
 }
 
@@ -100,9 +116,8 @@ void print( int layer_size, double* layer, char* layer_type ) {
 
 }
 
-void free_mem( int row_A, double** layer) {
+void free_mem( int row_A, double* layer) {
 
-	for ( int i = 0; i < row_A; i++ )
-	free( layer[i] ); free(layer);
+	free(layer);
 
 }
