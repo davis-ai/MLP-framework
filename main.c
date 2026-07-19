@@ -28,7 +28,7 @@ int main() {
 	{
 		
 
-		double* dlt = delta( pred, output );
+		double* dlt = delta( pred, output, output_size );
 		double* error = elem_mult(dlt, dlt, output_size);
 		
 		for ( int l = 0; l < layer_size; l++ )
