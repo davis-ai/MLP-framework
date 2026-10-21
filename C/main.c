@@ -4,24 +4,38 @@
 
 #define len(x) (sizeof(x) / sizeof(x[0]))
 
+#define IH_ROWS 3
+#define IH_COLUMNS 2
+
+#define HO_ROWS 2
+#define HO_COLUMNS 2
 
 int output_size = 3;
 
 int main() {
 
-	double x[] =  { 1.0, 2.0 };	
-	double output[] = { 3.0, 1.0, 0 };
-
-	int inp_size = 2;
-	int layer_count= 3;
-
-	double ih_wgts[][2] = { { .1, .2 }, { .3, .4 }, { .5, .2 } }; int layer_size = 3;
-//	double ho_wgts[][2] = { { .3, .4 }, { .5, .2 } }; int layer_size = 2;
-
-//	double ( *Weights[ layer_count ] )[ inp_size] = { ih_wgts, ho_wgts };
+	vector INPUTS, OUTPUT;
+	INPUTS.COLS = 2; INPUT.VALUES =  { 1.0, 2.0 };	
+	OUTPUT.COLS = 3; OUTPUT.VALUES = { 3.0, 1.0, 0 };
 
 
-	double* pred = neural_network ( inp_size, layer_size, x, ih_wgts );
+	vector IH_WEIGHTS,   HO_WEIGHTS;
+	IH_WEIGHTS.ROWS = 3, IH_WEIGHTS.COLS = 2;
+	HO_WEIGHTS.ROWS = 2, HO_WEIGHTS.COLS = 2;
+
+	IH_WEIGHTS.VALUES = { 
+		 .1, .2,
+		 .3, .4, 
+		 .5, .2 
+			    };
+
+	HO_WEIGHTS.VALUES = {  
+		.3, .4   
+		.5, .2  
+			   }; 
+
+
+	double* pred = neural_network ( INPUTS, IH_WEIGHTS );
 	double alpha = 0.001;
 
 	for ( int i = 0; i < 1000; i++ )
